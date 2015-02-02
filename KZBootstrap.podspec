@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/krzysztofzablocki/KZBootstrap"
   s.license          = 'MIT'
   s.author           = { "Krzysztof Zablocki" => "krzysztof.zablocki@me.com" }
-  s.source           = { :git => "https://github.com/krzysztofzablocki/KZBootstrap.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/jojo_mobile/KZBootstrap.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/merowing_'
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '5.1.1'
   s.requires_arc = true
 
   s.resources = ['Pod/Assets/Scripts/*']
