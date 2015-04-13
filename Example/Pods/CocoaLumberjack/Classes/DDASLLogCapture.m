@@ -22,7 +22,7 @@
 #include <sys/time.h>
 
 static BOOL _cancel = YES;
-static DDLogLevel _captureLevel = DDLogLevelVerbose;
+static DDLogLevel _captureLevel = DDLogLevelAll;
 
 #ifdef __IPHONE_8_0
     #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0

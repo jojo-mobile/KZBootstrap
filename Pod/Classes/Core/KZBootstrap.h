@@ -12,11 +12,11 @@
 + (void)setDefaultBuildEnvironment:(NSString*)defaultBuildEnv;
 
 //! loads from ENV variable by default
-+ (NSString *)currentEnvironment;
++ (NSString *)lastEnvironment;
 
 + (void)setCurrentEnvironment:(NSString *)environment;
 
-+ (void)setOnCurrentEnvironmentChanged:(void (^)(NSString *newEnv, NSString *oldEnv))block;
++ (void)setOnCurrentEnvironmentChanged:(void (^)(NSString *newEnv, NSString *oldEnv, NSDictionary* newCustomValues, NSDictionary* oldCustomValues))block;
 
 + (id)envVariableForKey:(NSString *)key;
 

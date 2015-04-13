@@ -13,4 +13,13 @@
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+
+
+#endif
+
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#ifdef DEBUG
+static const NSUInteger ddLogLevel = DDLogLevelVerbose;
+#else
+static const NSUInteger ddLogLevel = DDLogLevelVerbose;
 #endif

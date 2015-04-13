@@ -13,20 +13,30 @@
 #import "DDLogMacros.h"
 #import "KZBootstrapLogFormatter.h"
 #import "AFNetworking.h"
-static const int ddLogLevel = LOG_LEVEL_INFO;
+#import "KZBViewController.h"
 
 @implementation KZBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [self setupLogging];
+    
+    //Environment override when Release (just in case)
+    if ([KZBConfiguration isEqualToString:@"Release"]) {
+        [[NSUserDefaults standardUserDefaults] setValue:KZBEnv forKey:@"KZBEnvOverride"];
+        [[NSUserDefaults standardUserDefaults] setValue:KZBEnv forKey:@"KZBCurrentEnv"];
+    }
   NSLog(@"user variable = %@, launch argument %@", KZBEnv, [[NSUserDefaults standardUserDefaults] objectForKey:@"KZBEnvOverride"]);
   KZBootstrap.defaultBuildEnvironment = KZBEnv;
-  KZBootstrap.onCurrentEnvironmentChanged = ^(NSString *newEnv, NSString *oldEnv) {
+  KZBootstrap.onCurrentEnvironmentChanged = ^(NSString *newEnv, NSString *oldEnv, NSDictionary* newCustomValues, NSDictionary* oldCustomValues) {
     DDLogInfo(@"Changing env from %@ to %@", oldEnv, newEnv);
+      DDLogInfo(@"Changing MyVariable to %@", [KZBootstrap envVariableForKey:@"MyVariable"]);
+      DDLogInfo(@"Changing YourVariable to %@", [KZBootstrap envVariableForKey:@"YourVariable"]);
+      DDLogInfo(@"newCustomValues %@", newCustomValues);
+      DDLogInfo(@"oldCustomValues %@", oldCustomValues);
   };
   [KZBootstrap ready];
-  DDLogInfo(@"KZBootstrap:\n\tshortVersion: %@\n\tbranch: %@\n\tbuildNumber: %@\n\tenvironment: %@", KZBootstrap.shortVersionString, KZBootstrap.gitBranch, @(KZBootstrap.buildNumber), KZBootstrap.currentEnvironment);
+  DDLogInfo(@"KZBootstrap:\n\tshortVersion: %@\n\tbranch: %@\n\tbuildNumber: %@\n\tenvironment: %@", KZBootstrap.shortVersionString, KZBootstrap.gitBranch, @(KZBootstrap.buildNumber), KZBootstrap.lastEnvironment);
   DDLogInfo(@"keyPath %@", KZB_KEYPATH(window.windowLevel));
   DDLogInfo(@"MyVariable %@", [KZBootstrap envVariableForKey:@"MyVariable"]);
   [self testUIKitOverride];
@@ -46,7 +56,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
     //! this should throw assertion if KZBootstrap/Debug is included
-//    [view setNeedsDisplay];
+    //[view setNeedsDisplay];
   });
 }
 
@@ -65,11 +75,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
   KZBootstrapLogFormatter *logFormatter = [[KZBootstrapLogFormatter alloc] init];
   [[DDASLLogger sharedInstance] setLogFormatter:logFormatter];
   [[DDTTYLogger sharedInstance] setLogFormatter:logFormatter];
-
+    
   [DDLog addLogger:[DDASLLogger sharedInstance]];
   [DDLog addLogger:[DDTTYLogger sharedInstance]];
-
+    
   [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

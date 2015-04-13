@@ -11,11 +11,20 @@
 	<key>MyVariable</key>
 	<dict>
 		<key>QA</key>
-		<string>Something</string>
+		<string>MyQA</string>
 		<key>STAGING</key>
-		<string>SomethingElse</string>
+		<string>MySTAGING</string>
 		<key>PRODUCTION</key>
-		<string>SomethingElse</string>
+		<string>MyPRODUCTION</string>
+	</dict>
+	<key>YourVariable</key>
+	<dict>
+		<key>QA</key>
+		<string>YourQA</string>
+		<key>STAGING</key>
+		<string>YourStaging</string>
+		<key>PRODUCTION</key>
+		<string>YourProduction</string>
 	</dict>
 </dict>
 </plist>

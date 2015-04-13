@@ -11,6 +11,7 @@ static NSString *const kLastEnvKey = @"KZBCurrentEnv";
 
 + (void)ready
 {
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkEnvironmentOverride) name:UIApplicationWillEnterForegroundNotification object:nil];
     [self environmentVariables];
     [self checkEnvironmentOverride];
@@ -41,14 +42,74 @@ static NSString *const kLastEnvKey = @"KZBCurrentEnv";
 + (void)checkEnvironmentOverride
 {
     NSString *envOverride = self.environmentOverride;
-    if (envOverride && ![self.currentEnvironment isEqualToString:envOverride]) {
-        self.currentEnvironment = envOverride;
+    
+    if (envOverride && ![self.lastEnvironment isEqualToString:envOverride]) {
+        self.lastEnvironment = envOverride;
     }
+    else if (envOverride && [envOverride isEqualToString:@"CUSTOM"]) {
+        if (![[self clearDict:[self currentCustomValues]] isEqualToDictionary:[self clearDict:[self lastCustomValues]]]) {
+            self.onCurrentEnvironmentChanged(envOverride, [self lastEnvironment], [self currentCustomValues],[self lastCustomValues]);
+            [self updateLastCustomValues];
+        }
+    }
+}
+
++(NSDictionary*)lastCustomValues{
+    return [self _userDefultsValuesWithPrefix:@"KZBCustom.Last."];
+}
+
++(void)updateLastCustomValues{
+    NSDictionary* currentCustomValues = [self currentCustomValues];
+    for (NSString* key in [currentCustomValues allKeys]) {
+        NSString* lastKey = [key stringByReplacingOccurrencesOfString:@"KZBCustom.Current." withString:@"KZBCustom.Last."];
+        [[NSUserDefaults standardUserDefaults] setObject:currentCustomValues[key] forKey:lastKey];
+    }
+}
+
++(NSDictionary*)currentCustomValues{
+    return [self _userDefultsValuesWithPrefix:@"KZBCustom.Current."];
+}
+
++(NSDictionary*)clearDict:(NSDictionary*)dict{
+    NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
+    NSArray* keys = [dict allKeys];
+    for (NSString* key in keys) {
+        NSString* clearKey;
+        if([key hasPrefix:@"KZBCustom.Current."]){
+            clearKey = [key stringByReplacingOccurrencesOfString:@"KZBCustom.Current." withString:@""];
+        }
+        else if([key hasPrefix:@"KZBCustom.Last."]){
+            clearKey = [key stringByReplacingOccurrencesOfString:@"KZBCustom.Last." withString:@""];
+        }
+        if (clearKey) {
+            result[clearKey] = dict[key];
+        }
+    }
+    return result;
+}
+
++(NSDictionary*)_userDefultsValuesWithPrefix:(NSString*)prefix{
+    NSMutableDictionary* dict = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] mutableCopy];
+    NSArray* keys = [dict allKeys];
+    NSArray* filteredArray = [keys objectsAtIndexes:[keys indexesOfObjectsPassingTest:^BOOL(NSString* obj, NSUInteger idx, BOOL *stop) {
+        return [obj hasPrefix:prefix];
+    }]];
+    NSMutableDictionary* filteredDict = [[NSMutableDictionary alloc] init];
+    for (NSString* key in filteredArray) {
+        filteredDict[key] = dict[key];
+    }
+    return filteredDict;
 }
 
 + (id)envVariableForKey:(NSString *)key
 {
-    id value = self.environmentVariables[key][self.currentEnvironment];
+    id value = self.environmentVariables[key][self.lastEnvironment];
+    if ([self.lastEnvironment isEqualToString:@"CUSTOM"]) {
+        value = [[NSUserDefaults standardUserDefaults] objectForKey:[@"KZBCustom.Current." stringByAppendingString:key]];
+        if (!value){
+            value = @"";
+        }
+    }
     AssertTrueOrReturnNil(value);
     return value;
 }
@@ -159,7 +220,7 @@ static const void *kDefaultBuildEnvKey = &kDefaultBuildEnvKey;
     return objc_getAssociatedObject(self, kDefaultBuildEnvKey);
 }
 
-+ (NSString *)currentEnvironment
++ (NSString *)lastEnvironment
 {
     NSString *env = objc_getAssociatedObject(self, kEnvKey);
     if (!env) {
@@ -172,12 +233,18 @@ static const void *kDefaultBuildEnvKey = &kDefaultBuildEnvKey;
     return env;
 }
 
-+ (void)setCurrentEnvironment:(NSString *)environment
++ (void)setLastEnvironment:(NSString *)environment
 {
-    NSString *oldEnv = self.currentEnvironment;
+    NSString *oldEnv = self.lastEnvironment;
     objc_setAssociatedObject(self, kEnvKey, environment, OBJC_ASSOCIATION_COPY);
-    if (oldEnv && self.onCurrentEnvironmentChanged && ![oldEnv isEqualToString:environment]) {
-        self.onCurrentEnvironmentChanged(environment, oldEnv);
+    if (environment && [environment isEqualToString:@"CUSTOM"]) {
+        self.onCurrentEnvironmentChanged(environment, oldEnv, [self currentCustomValues],[self lastCustomValues]);
+        [self updateLastCustomValues];
+        
+    }
+
+    else if (oldEnv && self.onCurrentEnvironmentChanged && ![oldEnv isEqualToString:environment]) {
+        self.onCurrentEnvironmentChanged(environment, oldEnv, nil, nil);
     }
     
     //! persist current env between versions
@@ -193,12 +260,12 @@ static const void *kDefaultBuildEnvKey = &kDefaultBuildEnvKey;
 
 static const void *kOnCurrentEnvChangedKey = &kOnCurrentEnvChangedKey;
 
-+ (void (^)(NSString *, NSString *))onCurrentEnvironmentChanged
++ (void (^)(NSString *, NSString *, NSDictionary*, NSDictionary*))onCurrentEnvironmentChanged
 {
     return objc_getAssociatedObject(self, kOnCurrentEnvChangedKey);
 }
 
-+ (void)setOnCurrentEnvironmentChanged:(void (^)(NSString *, NSString *))block
++ (void)setOnCurrentEnvironmentChanged:(void (^)(NSString *, NSString *, NSDictionary*, NSDictionary*))block
 {
     objc_setAssociatedObject(self, kOnCurrentEnvChangedKey, block, OBJC_ASSOCIATION_COPY);
 }

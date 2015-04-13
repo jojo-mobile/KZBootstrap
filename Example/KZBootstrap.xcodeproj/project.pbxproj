@@ -24,7 +24,6 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		63218625DB4FEF2E2251DAD1 /* libPods-KZBootstrap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B5DE27CEBDDD2AD853FFA4C /* libPods-KZBootstrap.a */; };
 		CDCCAB1919ED1D76006CD949 /* KZBEnvironments.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDCCAB1819ED1D76006CD949 /* KZBEnvironments.plist */; };
-		CDCCAB2019ED2578006CD949 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CDCCAB1F19ED2578006CD949 /* Settings.bundle */; };
 		CDCCAB6419ED5693006CD949 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDCCAB6319ED5693006CD949 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +40,10 @@
 /* Begin PBXFileReference section */
 		0538AF8A7A077AF2455E23C0 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B5DE27CEBDDD2AD853FFA4C /* libPods-KZBootstrap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KZBootstrap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		27F5B1E61AD8007D00F92972 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		27F5B1E71AD8007D00F92972 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		27F5B1E81AD8007D00F92972 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		27F5B1E91AD8007D00F92972 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4207A8FDAE53D1EB485FF555 /* KZBootstrap.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KZBootstrap.podspec; path = ../KZBootstrap.podspec; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* KZBootstrap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KZBootstrap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,7 +69,6 @@
 		A70B44D0A64D2CB6D7DA1142 /* Pods-KZBootstrap.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KZBootstrap.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-KZBootstrap/Pods-KZBootstrap.adhoc.xcconfig"; sourceTree = "<group>"; };
 		BCB154E09C28B2E0F43230A4 /* Pods-KZBootstrap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KZBootstrap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KZBootstrap/Pods-KZBootstrap.debug.xcconfig"; sourceTree = "<group>"; };
 		CDCCAB1819ED1D76006CD949 /* KZBEnvironments.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KZBEnvironments.plist; sourceTree = "<group>"; };
-		CDCCAB1F19ED2578006CD949 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		CDCCAB2119ED2926006CD949 /* KZBootstrapUserMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KZBootstrapUserMacros.h; sourceTree = "<group>"; };
 		CDCCAB6319ED5693006CD949 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5CE4B6A25F518D232CE063F /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,7 +141,6 @@
 		6003F593195388D20070C39A /* KZBootstrap */ = {
 			isa = PBXGroup;
 			children = (
-				CDCCAB1F19ED2578006CD949 /* Settings.bundle */,
 				CDCCAB1819ED1D76006CD949 /* KZBEnvironments.plist */,
 				6003F59C195388D20070C39A /* KZBAppDelegate.h */,
 				6003F59D195388D20070C39A /* KZBAppDelegate.m */,
@@ -270,6 +271,7 @@
 			knownRegions = (
 				en,
 				Base,
+				pl,
 			);
 			mainGroup = 6003F581195388D10070C39A;
 			productRefGroup = 6003F58B195388D20070C39A /* Products */;
@@ -291,7 +293,6 @@
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				CDCCAB6419ED5693006CD949 /* Images.xcassets in Resources */,
-				CDCCAB2019ED2578006CD949 /* Settings.bundle in Resources */,
 				CDCCAB1919ED1D76006CD949 /* KZBEnvironments.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pod/Assets/Scripts/bootstrap.sh\"";
+			shellScript = "\"${SRCROOT}/../Pod/Assets/Scripts/bootstrap.sh\"\n";
 		};
 		D92CAF43189F85C257CD73E7 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -416,6 +417,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F597195388D20070C39A /* en */,
+				27F5B1E81AD8007D00F92972 /* pl */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -424,6 +426,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F5A0195388D20070C39A /* Base */,
+				27F5B1E61AD8007D00F92972 /* pl */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F5A3195388D20070C39A /* Base */,
+				27F5B1E71AD8007D00F92972 /* pl */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -440,6 +444,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F5B9195388D20070C39A /* en */,
+				27F5B1E91AD8007D00F92972 /* pl */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -601,10 +606,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"KZBEnv=$(KZBEnv)",
+					"KZBEnv=@\\\"$(KZBDefaultEnv)\\\"",
+					"KZBConfiguration=@\\\"${CONFIGURATION}\\\"",
 				);
 				INFOPLIST_FILE = "KZBootstrap/KZBootstrap-Info.plist";
-				KZBEnv = "@\\\"QA\\\"";
+				KZBDefaultEnv = QA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -616,16 +622,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_ID_SUFFIX = "";
+				BUNDLE_DISPLAY_NAME_SUFFIX = dev;
+				BUNDLE_ID_SUFFIX = .dev;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KZBootstrap/KZBootstrap-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"KZBEnv=\"$(KZBEnv)\"",
+					"KZBEnv=@\\\"$(KZBDefaultEnv)\\\"",
+					"KZBConfiguration=@\\\"${CONFIGURATION}\\\"",
 				);
 				INFOPLIST_FILE = "KZBootstrap/KZBootstrap-Info.plist";
-				KZBEnv = "@\\\"QA\\\"";
+				KZBDefaultEnv = PRODUCTION;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -750,10 +758,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"KZBEnv=\"$(KZBEnv)\"",
+					"KZBEnv=@\\\"$(KZBDefaultEnv)\\\"",
+					"KZBConfiguration=@\\\"${CONFIGURATION}\\\"",
 				);
 				INFOPLIST_FILE = "KZBootstrap/KZBootstrap-Info.plist";
-				KZBEnv = "@\\\"QA\\\"";
+				KZBDefaultEnv = QA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

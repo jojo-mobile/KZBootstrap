@@ -16,4 +16,6 @@
 
 @interface KZBViewController : UIViewController
 
+-(void)update;
+
 @end
