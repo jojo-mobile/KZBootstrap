@@ -20,6 +20,8 @@
 
 + (id)envVariableForKey:(NSString *)key;
 
++ (void)initializeWithDefaultBuildEnvironment:(NSString*)defaultBuildEnv currentTargetConfiguration:(NSString*)currentTargetConfiguration;
+
 + (void)ready;
 
 /**

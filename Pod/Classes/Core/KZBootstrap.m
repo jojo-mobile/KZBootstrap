@@ -9,6 +9,14 @@ static NSString *const kLastEnvKey = @"KZBCurrentEnv";
 
 @implementation KZBootstrap
 
+
++ (void)initializeWithDefaultBuildEnvironment:(NSString*)defaultBuildEnv currentTargetConfiguration:(NSString*)currentTargetConfiguration{
+    [self setDefaultBuildEnvironment:defaultBuildEnv];
+    if ([currentTargetConfiguration isEqualToString:@"Release"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:defaultBuildEnv forKey:@"KZBEnvOverride"];
+    }
+}
+
 + (void)ready
 {
 

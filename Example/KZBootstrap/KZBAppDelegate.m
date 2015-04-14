@@ -20,13 +20,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [self setupLogging];
+    [KZBootstrap initializeWithDefaultBuildEnvironment:KZBEnv currentTargetConfiguration:KZBConfiguration];
     
-    //Environment override when Release (just in case)
-    if ([KZBConfiguration isEqualToString:@"Release"]) {
-        [[NSUserDefaults standardUserDefaults] setValue:KZBEnv forKey:@"KZBEnvOverride"];
-        [[NSUserDefaults standardUserDefaults] setValue:KZBEnv forKey:@"KZBCurrentEnv"];
-    }
-  NSLog(@"user variable = %@, launch argument %@", KZBEnv, [[NSUserDefaults standardUserDefaults] objectForKey:@"KZBEnvOverride"]);
   KZBootstrap.defaultBuildEnvironment = KZBEnv;
   KZBootstrap.onCurrentEnvironmentChanged = ^(NSString *newEnv, NSString *oldEnv, NSDictionary* newCustomValues, NSDictionary* oldCustomValues) {
     DDLogInfo(@"Changing env from %@ to %@", oldEnv, newEnv);
